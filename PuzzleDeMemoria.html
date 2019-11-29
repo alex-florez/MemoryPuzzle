@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Alejandro Flórez Muñiz">
+    <meta name="description" content="Ejercicio 6 de la Práctica 4 - Aplicación Web de temática libre">
+
+    <title>Puzzle de Memoria</title>
+
+    <!-- Hojas CSS -->
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+
+    <!-- Scripts -->
+    <script src="PuzzleDeMemoria.js"></script>
+    <script src="Card.js"></script>
+    <script src="Tipo.js"></script>
+    <script src="Tablero.js"></script>
+
+</head>
+<body>
+
+<header>
+    <h1> Puzzle de Memoria </h1>
+</header>
+
+<main>
+    <!-- Cabecera con datos explicativos del juego -->
+    <header>
+        <h2>Bienvenido</h2>
+        <p> Esta aplicación web consiste en un juego clásico denominado 'Puzzle de Memoria'.</p>
+    </header>
+
+    <!-- Sección de configuración de la dificultad -->
+    <section class="panel-configuracion">
+        <h3>Configuración del juego</h3>
+
+        <form id="configuracion">
+            <p class="bold">
+                Dificultad:
+                <input type="radio" name="dificultad" value="facil">Fácil
+                <input type="radio" name="dificultad" value="medio">Medio
+                <input type="radio" name="dificultad" value="dificil">Difícil
+            </p>
+        </form>
+        <input id="boton-comenzar" type="button" value="¡Comenzar a jugar!"/>
+    </section>
+
+    <div class="main-container">
+        <!-- Parejas resueltas -->
+        <section class="panel-izquierdo">
+            <!--
+            <h3>Parejas resueltas</h3>
+            <div id="parejas-resueltas">2</div>
+            -->
+        </section>
+
+
+        <!-- Tablero del juego -->
+        <div id="juego">
+        </div>
+
+        <!-- Intentos restantes -->
+
+        <section class="panel-derecho">
+            <!--
+            <h3>Intentos restantes</h3>
+            <div id="intentos-restantes">10</div>
+            -->
+        </section>
+    </div>
+
+</main>
+
+
+<footer>
+    <address>Correo electrónico: <a href="mailto:UO264371@uniovi.es">Alejandro Flórez</a></address>
+    <img src="https://www.w3.org/html/logo/badge/html5-badge-h-solo.png" alt="HTML5 V&aacute;lido!" height="64"
+         width="63">
+    <img src="http://jigsaw.w3.org/css-validator/images/vcss" alt="&iexcl;CSS V&aacute;lido!">
+    <img src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="&iexcl;CSS V&aacute;lido!">
+</footer>
+
+
+</body>
+</html>
