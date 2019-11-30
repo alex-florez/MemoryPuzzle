@@ -6,10 +6,11 @@ class Tipo {
     /*
      * Diferentes tipos de frutas.
      */
-    static Manzana = "A";
-    static Platano = "B";
-    static Cereza = "C";
-    static Limon = "D";
+    static Manzana = "img/apple.jpg";
+    static Platano = "img/banana.jpg";
+    static Cereza = "img/cherries.jpg";
+    static Limon = "img/lemon.jpg";
+    static Pineapple = "img/pineapple.jpg";
 
     constructor(nombre, ruta){
         this.nombre = nombre;

@@ -8,7 +8,11 @@ class Tablero {
         this.juego = juego;
         this.n = n;
         this.m = m;
-        this.tipos = ["A", "B", "C", "D", "E"];
+        this.tipos = [new Tipo("Manzana", Tipo.Manzana),
+            new Tipo("Cereza", Tipo.Cereza),
+            new Tipo("Limon", Tipo.Limon),
+            new Tipo("Piña", Tipo.Pineapple),
+            new Tipo("Platano", Tipo.Platano)];
         this.cartas = this.tableroVacio(n);
         this.lastCardFlipped = null;
     }
@@ -21,7 +25,7 @@ class Tablero {
                 if (this.cartas[i][j] == null)
                     o += "x" + " ";
                 else
-                    o += this.cartas[i][j].tipo + " ";
+                    o += this.cartas[i][j].tipo.nombre + " ";
             }
             o += "\n";
         }
@@ -36,7 +40,7 @@ class Tablero {
      */
     flip(x, y) {
         let carta = this.cartas[x][y];
-        if (!carta.flipped) {
+        if (!carta.flipped && this.juego.intentos > 0) {
             carta.flip();
 
             if (this.lastCardFlipped == null) {
@@ -45,26 +49,6 @@ class Tablero {
                 this.checkCards(carta);
             }
         }
-    }
-
-
-    /**
-     * Se encarga de comprobar si las dos cartas que se han levantado
-     * coinciden, de no ser así se vuelven a dar la vuelta.
-     */
-    checkCards(carta) {
-        if (this.lastCardFlipped.tipo == carta.tipo){ // Coincidencia
-            console.log("Pareja encontrada!");
-            this.juego.incrementarParejasResueltas();
-        } else {
-            // esperar 500 ms y ocultar ambas carta
-            // this.sleep(1000);
-            this.juego.decrementarIntentos();
-            setTimeout(this.ocultarPareja.bind(this, this.lastCardFlipped, carta), 1000);
-           // this.ocultarPareja(this.lastCardFlipped, carta);
-        }
-        this.lastCardFlipped = null;
-        this.juego.update();
     }
 
     /**
@@ -77,6 +61,25 @@ class Tablero {
         while (currentTime + ms >= new Date().getTime()) {
         }
     }
+
+    /**
+     * Se encarga de comprobar si las dos cartas que se han levantado
+     * coinciden, de no ser así se vuelven a dar la vuelta.
+     */
+    checkCards(carta) {
+        if (this.lastCardFlipped.tipo == carta.tipo) { // Coincidencia
+            console.log("Pareja encontrada!");
+            this.juego.incrementarParejasResueltas();
+            this.juego.checkSucces();
+        } else {
+            this.juego.decrementarIntentos();
+            if (!this.juego.checkFail())
+                setTimeout(this.ocultarPareja.bind(this, this.lastCardFlipped, carta), 500);
+        }
+        this.lastCardFlipped = null;
+        this.juego.update();
+    }
+
 
     /**
      * Se encarga de ocultar la pareja de cartas pasada como parámetro al cabo de los
@@ -105,15 +108,34 @@ class Tablero {
         // Creamos las cartas
         for (let i = 0; i < this.n; i++) {
             for (let j = 0; j < this.m; j++) {
-                let div = document.createElement("div");
+                //let div = document.createElement("div");
                 let carta = this.cartas[i][j];
-                let id = carta.x.toString() + carta.y.toString();
-                div.setAttribute("id", id);
-                div.setAttribute("class", "carta");
-                div.innerText = "X"; // Dada la vuelta.
-                tablero.appendChild(div);
+                //let id = carta.x.toString() + carta.y.toString();
+                tablero.appendChild(this.createCell(carta));
             }
         }
+    }
+
+    /**
+     * Crea una celda para una carta concreta del tablero.
+     * @param id
+     * @param className
+     */
+    createCell(carta) {
+        let id = carta.x.toString() + carta.y.toString();
+        let cell = document.createElement("input");
+        cell.setAttribute("type", "image");
+        cell.setAttribute("id", id);
+        cell.setAttribute("alt", carta.tipo.nombre);
+        cell.setAttribute("src", "img/carta_dada_la_vuelta.png");
+        let className = "";
+        if ((this.n * this.m) == 30)
+            className = "carta5x6";
+        else if ((this.n * this.m) == 20)
+            className = "carta4x5";
+        cell.setAttribute("class", className);
+        cell.innerText = "X"; // Dada la vuelta.
+        return cell;
     }
 
     /**
@@ -193,4 +215,7 @@ class Tablero {
         return tab;
     }
 }
+
+
+
 

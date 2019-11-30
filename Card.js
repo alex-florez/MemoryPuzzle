@@ -16,8 +16,8 @@ class Card {
      * Método para dar la vuelta a esta carta en concreto.
      */
     flip() {
-        let div = this.findCell();
-        div.innerText = this.tipo;
+        let cell = this.findCell();
+        cell.setAttribute("src", this.tipo.imagen);
         this.flipped = true;
     }
 
@@ -26,8 +26,8 @@ class Card {
      * Se encarga de volver a dar la vuelta a la carta.
      */
     esconder() {
-        let div = this.findCell();
-        div.innerText = "X";
+        let cell = this.findCell();
+        cell.setAttribute("src", "img/carta_dada_la_vuelta.png");
         this.flipped = false;
     }
 

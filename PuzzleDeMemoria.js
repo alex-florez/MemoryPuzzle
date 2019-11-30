@@ -2,13 +2,32 @@
  * Clase que representa una instancia del juego del puzzle de memoria.
  */
 class PuzzleDeMemoria {
-    constructor(filas, columnas) {
+    constructor(filas, columnas, dificulty) {
         this.tablero = new Tablero(filas, columnas, this);
-        this.started = false;
         this.intentos = 50;
         this.parejasResueltas = 0;
+        this.dificulty = dificulty;
     }
 
+    /**
+     * Establece el nivel de dificultad pasado como parámetro.
+     * @param dificulty
+     */
+    setDificulty() {
+        switch (this.dificulty) {
+            case "facil":
+                this.intentos = ((this.tablero.n * this.tablero.m) / 2) + 15;
+                break;
+            case "medio":
+                this.intentos = ((this.tablero.n * this.tablero.m) / 2) + 10;
+                break;
+            case "dificil":
+                this.intentos = ((this.tablero.n * this.tablero.m) / 2) + 5;
+                break;
+            default:
+                this.intentos = 50;
+        }
+    }
 
     /**
      * Método para crear el tablero y asignar los eventos de los botones, entre
@@ -18,9 +37,11 @@ class PuzzleDeMemoria {
         this.tablero.crearTablero();
         this.tablero.draw();
         this.tablero.createEvents();
+        this.setDificulty();
         this.crearPanelIzquierdo();
         this.crearPanelDerecho();
     }
+
 
     /**
      * Crea el panel izquierdo con los datos del juego
@@ -46,7 +67,6 @@ class PuzzleDeMemoria {
     crearPanelDerecho() {
         let section = document.getElementsByClassName("panel-derecho")[0];
 
-        section.setAttribute("class", "panel-derecho");
         let h3_intentos_restantes = document.createElement("h3");
         h3_intentos_restantes.innerText = "Intentos restantes";
         let div_intentos_restantes = document.createElement("div");
@@ -78,13 +98,89 @@ class PuzzleDeMemoria {
         document.getElementById("parejas-resueltas").innerText = this.parejasResueltas;
         document.getElementById("intentos-restantes").innerText = this.intentos;
     }
+
+    /**
+     * Comprueba si el número de parejas resuelto es igual al
+     * número de parejas total, y si es así, finaliza la partida.
+     */
+    checkSucces() {
+        if (this.parejasResueltas == ((this.tablero.n * this.tablero.m) / 2)) {
+            alert("¡Has ganado!");
+            //this.setUp();
+        }
+    }
+
+    /**
+     * Comprueba si el número de intentos es igual a cero o inferior
+     * para fiinalizar la partida. Devuelve true si se ha perdido.
+     */
+    checkFail() {
+        if (this.intentos <= 0) {
+            alert("¡Has perdido! Otra vez será...");
+            //this.setUp();
+            return true;
+        }
+        return false;
+    }
 }
 
 
+/**
+ * Función encargada de leer la configuración
+ * introducida por el usuario.
+ */
+function readConf() {
+    let conf = [];
+    let dificulty = getSelectedValue("dificultad");
+    let tam = getSelectedValue("tamaño");
+    conf.push(dificulty);
+    conf.push(tam);
+    return conf;
+}
+
+/**
+ * Función que devuelve el valor del radio button seleccionado
+ * del grupo de nombre pasado como parámetro.
+ * @param name
+ */
+function getSelectedValue(name) {
+    let radios = document.getElementsByName(name);
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked)
+            return radios[i].value;
+    }
+    return null;
+}
+
+/**
+ * Borra todos los elementos hijos del nodo pasado como parámetro.
+ * @param nodo
+ */
+function borrarHijos(nodo) {
+    while (nodo.firstChild) {
+        nodo.removeChild(nodo.firstChild);
+    }
+}
+
 window.onload = function () {
     document.getElementById("boton-comenzar").onclick = function () {
-        juego = new PuzzleDeMemoria(5, 6);
+        // Borrar los elementos que hubieran sido creados anteriormente
+        // ************************************************************
+        let pIzq = document.getElementsByClassName("panel-izquierdo")[0];
+        let pCentral = document.getElementById("juego");
+        let pDer = document.getElementsByClassName("panel-derecho")[0];
+        borrarHijos(pIzq);
+        borrarHijos(pCentral);
+        borrarHijos(pDer);
+        // ************************************************************
+        // Cargar la configuración del juego
+        // *********************************
+        let configuration = readConf();
+        let dificulty = configuration[0];
+        let tam = configuration[1].split("x");
+        juego = new PuzzleDeMemoria(tam[0], tam[1], dificulty);
         juego.setUp();
+        // *********************************
         console.log(juego.tablero.imprimir());
     }
 }

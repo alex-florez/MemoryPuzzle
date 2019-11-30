@@ -20,14 +20,20 @@
 <body>
 
 <header>
-    <h1> Puzzle de Memoria </h1>
+    <h1> ¡Puzzle de Memoria! </h1>
 </header>
 
 <main>
     <!-- Cabecera con datos explicativos del juego -->
     <header>
         <h2>Bienvenido</h2>
-        <p> Esta aplicación web consiste en un juego clásico denominado 'Puzzle de Memoria'.</p>
+        <p id="texto-bienvenida"> ¿Tienes buena memoria?. Este juego probará tus capacidades para memorizar las cartas
+            de un tablero que inicialmente están dadas la vuelta. Deberás hacer 'click' sobre una carta para poder ver
+            su dibujo y hacerlo encajar con otra carta que tenga la misma imagen. Gestiona bien tus intentos, ya que son
+            limitados. ¿Podrás memorizar todas las cartas y
+            resolver el puzzle antes
+            de que el contador llegue a 0? ¡Buena suerte!
+        </p>
     </header>
 
     <!-- Sección de configuración de la dificultad -->
@@ -37,9 +43,15 @@
         <form id="configuracion">
             <p class="bold">
                 Dificultad:
-                <input type="radio" name="dificultad" value="facil">Fácil
+                <input type="radio" name="dificultad" value="facil" checked>Fácil
                 <input type="radio" name="dificultad" value="medio">Medio
                 <input type="radio" name="dificultad" value="dificil">Difícil
+            </p>
+
+            <p class="bold">
+                Tamaño del tablero:
+                <input type="radio" name="tamaño" value="4x5" checked>20 cartas
+                <input type="radio" name="tamaño" value="5x6">30 cartas
             </p>
         </form>
         <input id="boton-comenzar" type="button" value="¡Comenzar a jugar!"/>
@@ -48,10 +60,7 @@
     <div class="main-container">
         <!-- Parejas resueltas -->
         <section class="panel-izquierdo">
-            <!--
-            <h3>Parejas resueltas</h3>
-            <div id="parejas-resueltas">2</div>
-            -->
+
         </section>
 
 
@@ -60,12 +69,8 @@
         </div>
 
         <!-- Intentos restantes -->
-
         <section class="panel-derecho">
-            <!--
-            <h3>Intentos restantes</h3>
-            <div id="intentos-restantes">10</div>
-            -->
+
         </section>
     </div>
 
