@@ -3,18 +3,21 @@
  */
 class Tipo {
 
-    /*
-     * Diferentes tipos de frutas.
-     */
-    static Manzana = "img/apple.jpg";
-    static Platano = "img/banana.jpg";
-    static Cereza = "img/cherries.jpg";
-    static Limon = "img/lemon.jpg";
-    static Pineapple = "img/pineapple.jpg";
-
-    constructor(nombre, ruta){
+    constructor(nombre, ruta) {
         this.nombre = nombre;
         this.imagen = ruta;
     }
 
 }
+
+/*
+    * Diferentes tipos de frutas.
+    */
+tipos =
+    {
+        Manzana: "img/apple.jpg",
+        Platano: "img/banana.jpg",
+        Cereza: "img/cherries.jpg",
+        Limon: "img/lemon.jpg",
+        Pineapple: "img/pineapple.jpg",
+    }

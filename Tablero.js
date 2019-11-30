@@ -8,11 +8,11 @@ class Tablero {
         this.juego = juego;
         this.n = n;
         this.m = m;
-        this.tipos = [new Tipo("Manzana", Tipo.Manzana),
-            new Tipo("Cereza", Tipo.Cereza),
-            new Tipo("Limon", Tipo.Limon),
-            new Tipo("Piña", Tipo.Pineapple),
-            new Tipo("Platano", Tipo.Platano)];
+        this.tipos = [new Tipo("Manzana", tipos.Manzana),
+            new Tipo("Cereza", tipos.Cereza),
+            new Tipo("Limon", tipos.Limon),
+            new Tipo("Piña", tipos.Pineapple),
+            new Tipo("Platano", tipos.Platano)];
         this.cartas = this.tableroVacio(n);
         this.lastCardFlipped = null;
     }
